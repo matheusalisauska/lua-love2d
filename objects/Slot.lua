@@ -1,4 +1,5 @@
 local Seeds = require("data.Seeds")
+local lockSprite = love.graphics.newImage("assets/lock.png")
 function Slot(opts)
 	local sprite = love.graphics.newImage("assets/slot.png")
 	local dirtSprite = love.graphics.newImage("assets/dirt.png")
@@ -74,8 +75,7 @@ function Slot(opts)
 
 			if self.locked then
 				love.graphics.setFont(bigFont)
-				love.graphics.setColor(0, 0, 0)
-				love.graphics.print("Locked", self.x - 25, self.y + 15)
+				love.graphics.draw(lockSprite, self.x - 25, self.y + 15)
 				love.graphics.setColor(1, 1, 1)
 			end
 		end,
