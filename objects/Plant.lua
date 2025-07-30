@@ -1,6 +1,8 @@
 function Plant(seed, posX, posY)
 	local timer = 0
+	local totalTimer = 0
 	local interval = 4
+	local totalInterval = interval * 5 -- Número de sprites
 	local scaleTimer = 0
 	local scaleInterval = interval
 	local Seeds = require("data.Seeds")
@@ -21,7 +23,7 @@ function Plant(seed, posX, posY)
 			if currentStage == #seed.sprites then
 				return
 			end
-
+			totalTimer = totalTimer + dt
 			timer = timer + dt
 
 			if currentStage > 1 then
@@ -47,6 +49,10 @@ function Plant(seed, posX, posY)
 				if currentStage == #seed.sprites then
 					self.scale = 1.0
 				end
+			end
+
+			if totalTimer >= totalInterval then
+				totalTimer = totalTimer - totalInterval
 			end
 		end,
 
@@ -84,7 +90,7 @@ function Plant(seed, posX, posY)
 			local x = posX - 70
 			local y = posY + 15
 
-			local progress = timer / interval
+			local progress = totalTimer / totalInterval
 
 			if currentStage < #seed.sprites then
 				love.graphics.setColor(0.2, 0.8, 0.2)
@@ -93,7 +99,7 @@ function Plant(seed, posX, posY)
 				love.graphics.setFont(bigFont)
 				love.graphics.setColor(0, 0, 0)
 				love.graphics.print(seed.name, x + 55, y + 50)
-				love.graphics.print(string.format("%.1fs", interval - timer), x + 55, y + 25)
+				love.graphics.print(string.format("%.1fs", totalInterval - totalTimer), x + 55, y + 25)
 				love.graphics.setColor(1, 1, 1)
 				love.graphics.draw(progressBarSprite, x, y)
 			else
